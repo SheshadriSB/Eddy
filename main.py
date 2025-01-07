@@ -19,8 +19,10 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+    if message.content.startswith('!hello'):
+        await message.channel.send('Hello World!')
+    if message.content.startswith('!up'):
+        await message.channel.send('Yeah still up!!')
 
 
 keep_alive()
