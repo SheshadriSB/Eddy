@@ -29,4 +29,4 @@ async def on_message(message):
 keep_alive()
 
 # Run the bot with the token from the .env file
-client.run(os.getenv("DISCORD_TOKEN"))  # Ensure you have a .env file with your bot token
+client.run(os.getenv("MTMyNjIyMDU1NDAzODAxODE1OQ.Gxh8XZ.s7lF2fZi1fMnA0eLtwJxjUq_heqYX_HK-vh9FE"))  # Ensure you have a .env file with your bot token
