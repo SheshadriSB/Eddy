@@ -3,7 +3,7 @@ import discord
 from keepalive import keep_alive
 
 
-DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+DISCORD_TOKEN = os.getenv("BOT_TOKEN")
 
 intents = discord.Intents.default()
 intents.message_content = True
