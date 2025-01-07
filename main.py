@@ -23,6 +23,8 @@ async def on_message(message):
         await message.channel.send('Hello World!')
     if message.content.startswith('!up'):
         await message.channel.send('Yeah still up!!')
+    if message.content.startswith('!ping'):
+        await message.channel.send('pong!')
 
 
 keep_alive()
