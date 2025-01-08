@@ -25,6 +25,8 @@ async def on_message(message):
         await message.channel.send('Yeah still up!!')
     if message.content.startswith('!ping'):
         await message.channel.send('pong!')
+    if message.content.startswith('!monitor'):
+        await message.channel.send('uptime robot functional!')
 
 
 keep_alive()
