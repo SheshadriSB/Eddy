@@ -27,9 +27,8 @@ async def on_message(message):
         await message.channel.send('pong!')
     if message.content.startswith('!monitor'):
         await message.channel.send('uptime robot functional!')
-
-
-keep_alive()
+    if message.content.startswith('yesu'):
+        await message.channel.send("BOLNEEEE LAGIIIII MERA YESU MERA YESU YESU")
 
 
 client.run(DISCORD_TOKEN)
