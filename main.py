@@ -2,16 +2,11 @@ import os
 import discord
 from flask import Flask
 from threading import Thread
+from waitress import serve  # Changed import
 
-# Initialize Flask app for health checks
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return "Bot is running!"
-
-# Discord bot setup
-DISCORD_TOKEN = os.getenv("BOT_TOKEN")  # Make sure this matches Render's env var name
+DISCORD_TOKEN = os.getenv("BOT_TOKEN")
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -36,16 +31,13 @@ async def on_message(message):
 
 def run_flask():
     port = int(os.environ.get("PORT", 8080))
-    app.run(host='0.0.0.0', port=port)
+    serve(app, host='0.0.0.0', port=port)  # Changed to Waitress
 
 def run_bot():
     client.run(DISCORD_TOKEN)
 
 if __name__ == '__main__':
-    # Start Flask web server in a separate thread
     flask_thread = Thread(target=run_flask)
     flask_thread.daemon = True
     flask_thread.start()
-
-    # Run Discord bot in the main thread
     run_bot()
