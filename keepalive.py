@@ -1,6 +1,8 @@
 from flask import Flask
 import threading
 import os
+import discord
+from discord.ext import commands
 
 app = Flask(__name__)
 
@@ -8,13 +10,22 @@ app = Flask(__name__)
 def home():
     return "Bot is running!"
 
-def run():
-    # Render typically sets PORT as an environment variable
-    port = int(os.environ.get("PORT", 8080))  # Default to 8080 if PORT is not set
-    print(f"Flask app running on port {port}")
-    app.run(host='0.0.0.0', port=port)  # Ensure binding to 0.0.0.0
+def run_bot():
+    intents = discord.Intents.default()
+    bot = commands.Bot(command_prefix='!', intents=intents)
+    
+    @bot.event
+    async def on_ready():
+        print(f'Logged in as {bot.user.name} ({bot.user.id})')
 
-def keep_alive():
-    # Start Flask app in a separate thread
-    t = threading.Thread(target=run)
-    t.start()
+    bot.run(os.environ['DISCORD_TOKEN'])
+
+if __name__ == '__main__':
+    # Start Discord bot in a background thread
+    bot_thread = threading.Thread(target=run_bot)
+    bot_thread.daemon = True  # Daemonize thread to exit when main thread exits
+    bot_thread.start()
+
+    # Run Flask app in the main thread (required for Render's port binding)
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port, use_reloader=False)
