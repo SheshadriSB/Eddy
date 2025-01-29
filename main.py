@@ -1,10 +1,9 @@
 import os
 import discord
-from flask import Flask
-from threading import Thread
-from waitress import serve  # Changed import
+from keepalive import keep_alive
 
-app = Flask(__name__)
+# Start web server first
+keep_alive()
 
 DISCORD_TOKEN = os.getenv("BOT_TOKEN")
 
@@ -29,15 +28,7 @@ async def on_message(message):
     if message.content.startswith('!ping'):
         await message.channel.send('pong!')
 
-def run_flask():
-    port = int(os.environ.get("PORT", 8080))
-    serve(app, host='0.0.0.0', port=port)  # Changed to Waitress
-
-def run_bot():
+try:
     client.run(DISCORD_TOKEN)
-
-if __name__ == '__main__':
-    flask_thread = Thread(target=run_flask)
-    flask_thread.daemon = True
-    flask_thread.start()
-    run_bot()
+except Exception as e:
+    print(f"Error starting bot: {e}")
